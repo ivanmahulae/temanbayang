@@ -1,0 +1,29 @@
+body.dark {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+}
+
+body.dark .container {
+  background-color: #2c2c2c;
+  color: #f1f1f1;
+}
+
+body.dark input,
+body.dark textarea,
+body.dark button {
+  background-color: #333;
+  color: #f1f1f1;
+  border-color: #666;
+}
+
+body.dark nav a {
+  color: #90cdf4;
+}
+
+body.dark .story {
+  background-color: #333;
+}
+
+body.dark .comment {
+  border-left-color: #888;
+}

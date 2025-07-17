@@ -1,0 +1,562 @@
+/* ======================================================= */
+/* ===================== GLOBAL STYLES ================== */
+/* ======================================================= */
+
+/* === Reset Dasar === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+  line-height: 1.6;
+  padding: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+h1, h2, h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+/* === Formulir Umum === */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+/* === Story & Komentar === */
+.story {
+  border: 1px solid #ddd;
+  background-color: #fefefe;
+  padding: 1.25rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.story:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.story h3 {
+  margin-bottom: 0.5rem;
+}
+
+.story p {
+  margin-bottom: 0.75rem;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.comment {
+  background-color: #f1f1f1;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+  max-width: 90%;
+  position: relative;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.comment time {
+  display: block;
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 0.25rem;
+}
+
+.comment::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: -10px;
+  border: 6px solid transparent;
+  border-right-color: #f1f1f1;
+}
+
+.comment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.comment-text {
+  flex: 1;
+  word-break: break-word;
+}
+
+.empty-state {
+  font-style: italic;
+  color: #777;
+  margin-top: 0.5rem;
+}
+
+.delete-btn,
+.delete-comment-btn,
+.inline-delete-btn,
+.menu-dropdown .danger-btn {
+  background: none;
+  color: #e74c3c;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.delete-btn:hover,
+.delete-comment-btn:hover,
+.inline-delete-btn:hover,
+.menu-dropdown .danger-btn:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #c0392b;
+  text-decoration: underline;
+}
+
+/* === Navbar === */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #3498db;
+  font-weight: 600;
+  margin-right: 1rem;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: #1e70bf;
+}
+
+.nav-theme-toggle {
+  margin-right: 0.5rem;
+}
+
+/* === Mode Gelap === */
+body.dark {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+body.dark .container {
+  background-color: #1e1e1e;
+}
+
+body.dark input,
+body.dark textarea {
+  background-color: #2c2c2c;
+  color: #f1f1f1;
+  border: 1px solid #444;
+}
+
+body.dark nav a {
+  color: #66bfff;
+}
+
+body.dark .story {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark button {
+  background-color: #2980b9;
+}
+
+body.dark .comment {
+  background-color: #333;
+  color: #eee;
+}
+
+body.dark .comment::before {
+  border-right-color: #333;
+}
+
+body.dark .delete-comment-btn,
+body.dark .inline-delete-btn {
+  color: #ff6b6b;
+}
+
+body.dark .delete-comment-btn:hover,
+body.dark .inline-delete-btn:hover {
+  background-color: rgba(255, 107, 107, 0.15);
+}
+
+body.dark .comment-options-button {
+  color: #f1f1f1 !important;
+}
+
+/* === Alert === */
+.alert {
+  padding: 0.75rem 1rem;
+  background-color: #e3fcef;
+  color: #2f855a;
+  border-left: 5px solid #38a169;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+
+/* === Footer === */
+footer {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #999;
+}
+
+/* === Responsive === */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  button,
+  input,
+  textarea {
+    font-size: 0.95rem;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  nav a {
+    margin-right: 0.5rem;
+  }
+}
+
+/* === Hero Section === */
+.hero-section {
+  background: linear-gradient(to bottom, #150026, #23043e);
+  color: white;
+  padding: 5rem 1rem;
+  text-align: center;
+  background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+  background-repeat: repeat;
+  background-size: contain;
+}
+
+.hero-section-custom {
+  padding: 4rem 2rem;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.hero-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.hero-description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.hero-search-input {
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero-sub {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  margin-bottom: 2rem;
+}
+
+body:not(.dark) .hero-sub {
+  color: #555555;
+}
+
+.hero-button {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #150026;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.hero-button:hover {
+  background-color: #eaeaea;
+}
+
+/* === Spinner === */
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.spinner::after {
+  content: '';
+  width: 32px;
+  height: 32px;
+  border: 4px solid #3498db;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* === Tambahan dari Refactor Inline CSS === */
+.anon-info {
+  background-color: #fff8e1;
+  border-left: 4px solid #f4c542;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #7a6000;
+}
+
+.story-form-wrapper {
+  margin-bottom: 2.5rem;
+}
+
+.story-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.story-user {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-small {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  object-fit: cover;
+}
+
+.posted-time {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.dot-menu-btn,
+.comment-menu-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #333;
+  position: absolute;
+  top: 0.2rem;
+  right: 0;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 6px;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  font-size: 1rem;
+  padding: 0;
+  gap: 6px;
+}
+
+.social-row {
+  display: flex;
+  gap: 2rem;
+  margin: 0.8rem 0 1.5rem;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.story-detail-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  text-decoration: underline;
+  color: #3498db;
+  font-weight: bold;
+}
+
+.comment-meta {
+  font-size: 0.8rem;
+  color: gray;
+  margin-top: 0.3rem;
+}
+
+.top-category-wrap {
+  margin-bottom: 2rem;
+}
+
+.top-category-title {
+  margin-bottom: 1rem;
+}
+
+.category-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.category-box {
+  flex: 1 1 150px;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #fff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.category-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.highlight-section {
+  margin-bottom: 2rem;
+}
+
+.highlight-title {
+  margin-bottom: 1rem;
+}
+
+.highlight-list {
+  list-style: none;
+  padding: 0;
+}
+
+.highlight-item {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background: #fdfdfd;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.highlight-date {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.icon-button.no-highlight,
+.icon-button.no-highlight:hover,
+.icon-button.no-highlight:active,
+.icon-button.no-highlight:focus {
+  background-color: transparent !important;
+  color: #555 !important;
+  outline: none;
+  box-shadow: none;
+}
