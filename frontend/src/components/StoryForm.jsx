@@ -11,7 +11,7 @@ function StoryForm({ onStoryAdded }) {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await fetch('http://localhost:5000/stories', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/stories`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

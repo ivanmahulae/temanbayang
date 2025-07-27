@@ -23,7 +23,7 @@ function StoryDetail() {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      fetch(`http://localhost:5000/stories/${id}`)
+      fetch(`${import.meta.env.VITE_API_URL}/stories/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.status === 'success') {
@@ -54,7 +54,7 @@ function StoryDetail() {
     const anonymousId = getAnonymousId();
 
     try {
-      const res = await fetch(`http://localhost:5000/stories/${id}/comments/${commentId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/stories/${id}/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),

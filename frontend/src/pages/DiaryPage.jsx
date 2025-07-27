@@ -9,7 +9,7 @@ function DiaryPage() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://localhost:5000/diary", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/diary`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

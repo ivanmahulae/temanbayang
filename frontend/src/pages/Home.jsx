@@ -1,4 +1,3 @@
-// File: Home.jsx
 import { useEffect, useState } from 'react';
 import StoryForm from '../components/StoryForm';
 import CommentForm from '../components/CommentForm';
@@ -44,7 +43,7 @@ function Home() {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      fetch('http://localhost:5000/stories')
+      fetch(`${import.meta.env.VITE_API_URL}/stories`)
         .then((res) => res.json())
         .then((data) => {
           setStories(data.data || []);
@@ -78,7 +77,7 @@ function Home() {
     const anonymousId = getAnonymousId();
 
     try {
-      const res = await fetch(`http://localhost:5000/stories/${storyId}/comments/${commentId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/stories/${storyId}/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -117,7 +116,7 @@ function Home() {
     const token = localStorage.getItem('token');
 
     try {
-      const res = await fetch(`http://localhost:5000/stories/${storyId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/stories/${storyId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

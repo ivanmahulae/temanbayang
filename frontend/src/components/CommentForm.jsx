@@ -8,6 +8,8 @@ function CommentForm({ storyId, onCommentSuccess }) {
   const token = localStorage.getItem('token');
   const isUserLoggedIn = !!token;
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     setIsAnonymous(!isUserLoggedIn);
   }, [isUserLoggedIn]);
@@ -20,10 +22,10 @@ function CommentForm({ storyId, onCommentSuccess }) {
       return;
     }
 
-    const anonymousId = getAnonymousId(); // Ambil ID dari localStorage
+    const anonymousId = getAnonymousId();
 
     try {
-      const response = await fetch(`http://localhost:5000/stories/${storyId}/comments`, {
+      const response = await fetch(`${API_URL}/stories/${storyId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +51,6 @@ function CommentForm({ storyId, onCommentSuccess }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* Info untuk pengguna anonim */}
       {isAnonymous && (
         <div className="anon-info">
           💡 <strong>Info:</strong> Komentar Anda hanya bisa dihapus selama Anda menggunakan browser ini. Jika Anda berganti perangkat, tab, atau menghapus data browser, komentar tidak bisa dihapus lagi.

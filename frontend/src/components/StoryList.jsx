@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import CommentForm from './CommentForm';
 import { jwtDecode } from 'jwt-decode';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function StoryList() {
   const [stories, setStories] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -25,7 +27,7 @@ function StoryList() {
 
   // Ambil daftar cerita dari server
   useEffect(() => {
-    fetch('http://localhost:5000/stories')
+    fetch(`${API_BASE_URL}/stories`)
       .then((res) => res.json())
       .then((data) => {
         console.log('📦 Cerita dari server:', data);
@@ -45,7 +47,7 @@ function StoryList() {
   const handleDelete = async (storyId, commentId) => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:5000/stories/${storyId}/comments/${commentId}`, {
+      const res = await fetch(`${API_BASE_URL}/stories/${storyId}/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

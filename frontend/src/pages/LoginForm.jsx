@@ -1,17 +1,17 @@
-import { useNavigate } from 'react-router-dom'; // ⬅️ Tambah ini
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // ⬅️ Gunakan navigate
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ function LoginForm() {
         const token = result.data.token;
         localStorage.setItem('token', token);
         setMessage('Login berhasil!');
-        navigate('/'); // ⬅️ Arahkan ke halaman utama setelah login
+        navigate('/'); 
       } else {
         setMessage(result.message || 'Login gagal.');
       }
