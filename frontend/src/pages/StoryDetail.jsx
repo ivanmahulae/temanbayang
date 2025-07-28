@@ -88,7 +88,6 @@ function StoryDetail() {
       <h2>{story.title}</h2>
       <p>{story.body}</p>
 
-      {/* Avatar dan info penulis */}
       <div className="story-user">
         <img src="/anon-avatar.png" alt="avatar" className="avatar-small" />
         <small>
@@ -96,7 +95,6 @@ function StoryDetail() {
         </small>
       </div>
 
-      {/* Tombol sosial ala Twitter */}
       <div className="social-row">
         <button className="icon-button no-highlight"><FiHeart />Suka</button>
         <button className="icon-button no-highlight"><FiMessageCircle />Komentar</button>
@@ -113,38 +111,40 @@ function StoryDetail() {
             comment.user?.id === story.user?.id;
 
           return (
-            <li key={comment.id} className="comment-item">
+            <li key={comment.id} className="comment-item" style={{ position: 'relative' }}>
               <img src="/anon-avatar.png" alt="avatar" className="avatar-small" />
-              <div className="comment-text">
-                <strong>{comment.user?.name || 'Anonim'}:</strong> {comment.body}
-                <p className="comment-meta">
-                  Diposting: {new Date(comment.createdAt).toLocaleString()}
-                </p>
-              </div>
 
-              {isOwner && (
-                <div className="comment-menu">
-                  <button
-                    onClick={() =>
-                      setOpenCommentMenu(openCommentMenu === comment.id ? null : comment.id)
-                    }
-                    className="comment-menu-btn"
-                  >
-                    ⋮
-                  </button>
-
-                  {openCommentMenu === comment.id && (
-                    <div className="menu-dropdown">
-                      <button
-                        onClick={() => handleDeleteComment(comment.id)}
-                        className="delete-comment-btn"
-                      >
-                        Hapus
-                      </button>
-                    </div>
-                  )}
+              <div style={{ flex: 1, position: 'relative' }}>
+                <div className="comment-text">
+                  <strong>{comment.user?.name || 'Anonim'}:</strong> {comment.body}
+                  <p className="comment-meta">
+                    Diposting: {new Date(comment.createdAt).toLocaleString()}
+                  </p>
                 </div>
-              )}
+
+                {isOwner && (
+                  <div style={{ position: 'absolute', top: 0, right: 0 }}>
+                    <button
+                      className="comment-menu-btn"
+                      onClick={() =>
+                        setOpenCommentMenu(openCommentMenu === comment.id ? null : comment.id)
+                      }
+                    >
+                      ⋮
+                    </button>
+                    {openCommentMenu === comment.id && (
+                      <div className="menu-dropdown">
+                        <button
+                          onClick={() => handleDeleteComment(comment.id)}
+                          className="delete-comment-btn"
+                        >
+                          Hapus
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </li>
           );
         })}
