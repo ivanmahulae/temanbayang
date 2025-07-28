@@ -46,20 +46,16 @@ const init = async () => {
     path: '/register',
     handler: async (request, h) => {
       const { name, email, password } = request.payload;
-
       if (!name || !email || !password) {
         return h.response({ status: 'fail', message: 'Semua kolom wajib diisi.' }).code(400);
       }
-
       const isUsed = users.find((u) => u.email === email);
       if (isUsed) {
         return h.response({ status: 'fail', message: 'Email sudah terdaftar.' }).code(400);
       }
-
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = { id: users.length + 1, name, email, password: hashedPassword };
       users.push(newUser);
-
       return h.response({
         status: 'success',
         message: 'Registrasi berhasil.',
@@ -75,12 +71,9 @@ const init = async () => {
       const { email, password } = request.payload;
       const user = users.find((u) => u.email === email);
       if (!user) return h.response({ status: 'fail', message: 'Email tidak ditemukan.' }).code(401);
-
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return h.response({ status: 'fail', message: 'Password salah.' }).code(401);
-
       const token = jwt.sign({ id: user.id, name: user.name, email: user.email }, JWT_SECRET, { expiresIn: '1d' });
-
       return h.response({ status: 'success', message: 'Login berhasil.', data: { token } }).code(200);
     },
   });
@@ -92,11 +85,9 @@ const init = async () => {
       try {
         const user = verifyToken(request, h);
         const { title, body, isPrivate } = request.payload;
-
         if (!title || !body) {
           return h.response({ status: 'fail', message: 'Judul dan isi cerita wajib diisi.' }).code(400);
         }
-
         const newStory = {
           id: nanoid(),
           title,
@@ -106,9 +97,7 @@ const init = async () => {
           user: { id: user.id, name: user.name },
           comments: [],
         };
-
         stories.push(newStory);
-
         return h.response({ status: 'success', message: 'Cerita berhasil ditambahkan.', data: newStory }).code(201);
       } catch (err) {
         return h.response({ status: 'fail', message: err.message || 'Token tidak valid' }).code(401);
@@ -130,10 +119,10 @@ const init = async () => {
               id: comment.user?.id || null,
               name: comment.user?.name || 'Anonim',
               anonymousId: comment.user?.anonymousId || null,
+              isAnonymous: comment.user?.isAnonymous || false,
             },
           })),
         }));
-
       return { status: 'success', data: publicStories };
     },
   });
@@ -165,6 +154,7 @@ const init = async () => {
             id: comment.user?.id || null,
             name: comment.user?.name || 'Anonim',
             anonymousId: comment.user?.anonymousId || null,
+            isAnonymous: comment.user?.isAnonymous || false,
           },
         })),
       };
@@ -179,16 +169,13 @@ const init = async () => {
     handler: (request, h) => {
       let user = null;
       const authHeader = request.headers.authorization;
-
       if (authHeader?.startsWith('Bearer ')) {
         try {
           user = jwt.verify(authHeader.split(' ')[1], JWT_SECRET);
         } catch {}
       }
-
       const { id } = request.params;
       const { comment, isAnonymous, anonymousId } = request.payload;
-
       const story = stories.find((s) => s.id === id);
       if (!story) return h.response({ status: 'fail', message: 'Cerita tidak ditemukan.' }).code(404);
       if (!comment || comment.trim() === '') return h.response({ status: 'fail', message: 'Komentar tidak boleh kosong.' }).code(400);
@@ -206,7 +193,6 @@ const init = async () => {
       };
 
       story.comments.push(newComment);
-
       return h.response({ status: 'success', message: 'Komentar berhasil ditambahkan.', data: newComment }).code(201);
     },
   });
@@ -256,7 +242,6 @@ const init = async () => {
 
         const storyIndex = stories.findIndex((s) => s.id === id);
         if (storyIndex === -1) return h.response({ status: 'fail', message: 'Cerita tidak ditemukan.' }).code(404);
-
         if (stories[storyIndex].user.id !== user.id) {
           return h.response({ status: 'fail', message: 'Kamu tidak punya izin untuk menghapus cerita ini.' }).code(403);
         }
