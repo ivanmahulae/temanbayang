@@ -24,6 +24,7 @@ function Home() {
   const [refresh, setRefresh] = useState(false);
   const [userId, setUserId] = useState(null);
   const [alert, setAlert] = useState(null);
+  const [openStoryMenu, setOpenStoryMenu] = useState(null);
   const [openCommentMenu, setOpenCommentMenu] = useState(null);
 
   const isLoggedIn = !!localStorage.getItem('token');
@@ -124,7 +125,7 @@ function Home() {
       });
 
       const data = await res.json();
-      setOpenCommentMenu(null);
+      setOpenStoryMenu(null);
       if (data.status === 'success') {
         setRefresh(!refresh);
         showAlert('Cerita berhasil dihapus.');
@@ -133,7 +134,7 @@ function Home() {
       }
     } catch (err) {
       console.error('Gagal hapus cerita:', err.message);
-      setOpenCommentMenu(null);
+      setOpenStoryMenu(null);
       showAlert('Gagal menghubungi server.');
     }
   };
@@ -187,12 +188,12 @@ function Home() {
                       <button
                         className="dot-menu-btn"
                         onClick={() =>
-                          setOpenCommentMenu(openCommentMenu === story.id ? null : story.id)
+                          setOpenStoryMenu(openStoryMenu === story.id ? null : story.id)
                         }
                       >
                         ⋮
                       </button>
-                      {openCommentMenu === story.id && (
+                      {openStoryMenu === story.id && (
                         <div className="menu-dropdown">
                           <button
                             className="danger-btn"
@@ -229,7 +230,7 @@ function Home() {
                       comment.user?.anonymousId === getAnonymousId();
 
                     return (
-                      <li key={comment.id} className="comment-item">
+                      <li key={comment.id} className="comment-item" style={{ position: 'relative' }}>
                         <img src="/anon-avatar.png" alt="avatar" className="avatar-small" />
                         <div style={{ flex: 1 }}>
                           <strong>{comment.user?.name || 'Anonim'}:</strong> {comment.body}
@@ -238,7 +239,7 @@ function Home() {
                           </p>
                         </div>
                         {isOwner && (
-                          <div>
+                          <div style={{ position: 'relative' }}>
                             <button
                               className="comment-menu-btn"
                               onClick={() =>
@@ -248,7 +249,7 @@ function Home() {
                               ⋮
                             </button>
                             {openCommentMenu === comment.id && (
-                              <div className="menu-dropdown">
+                              <div className="menu-dropdown" style={{ right: 0 }}>
                                 <button
                                   className="danger-btn"
                                   onClick={() => handleDeleteComment(story.id, comment.id)}
