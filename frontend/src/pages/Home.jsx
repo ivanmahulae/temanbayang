@@ -169,7 +169,7 @@ function Home() {
           <p>Belum ada cerita.</p>
         ) : (
           stories.map((story) => {
-            const isStoryOwner = story.user?.id === userId;
+            const isStoryOwner = String(story.user?.id) === String(userId);
             return (
               <div key={story.id} className="story">
                 <div className="story-header">
@@ -225,7 +225,7 @@ function Home() {
                 <ul>
                   {story.comments.map((comment) => {
                     const isOwner =
-                      comment.user?.id === userId ||
+                      String(comment.user?.id) === String(userId) ||
                       comment.user?.anonymousId === getAnonymousId();
 
                     return (
@@ -281,4 +281,3 @@ function Home() {
 }
 
 export default Home;
-
