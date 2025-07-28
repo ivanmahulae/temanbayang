@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CommentForm from '../components/CommentForm';
 import Swal from 'sweetalert2';
+import { jwtDecode } from 'jwt-decode';
 import { FiHeart, FiMessageCircle, FiRepeat, FiBookmark } from 'react-icons/fi';
 
 const getAnonymousId = () => {
@@ -19,6 +20,19 @@ function StoryDetail() {
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [openCommentMenu, setOpenCommentMenu] = useState(null);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUserId(decoded.id);
+      } catch (err) {
+        console.error('Token tidak valid:', err.message);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -107,13 +121,12 @@ function StoryDetail() {
       <ul>
         {story.comments.map((comment) => {
           const isOwner =
-            comment.user?.anonymousId === getAnonymousId() ||
-            comment.user?.id === story.user?.id;
+            (userId && String(comment.user?.id) === String(userId)) ||
+            (!userId && comment.user?.anonymousId === getAnonymousId());
 
           return (
             <li key={comment.id} className="comment-item" style={{ position: 'relative' }}>
               <img src="/anon-avatar.png" alt="avatar" className="avatar-small" />
-
               <div style={{ flex: 1, position: 'relative' }}>
                 <div className="comment-text">
                   <strong>{comment.user?.name || 'Anonim'}:</strong> {comment.body}
