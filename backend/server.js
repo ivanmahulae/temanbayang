@@ -120,7 +120,20 @@ const init = async () => {
     method: 'GET',
     path: '/stories',
     handler: () => {
-      const publicStories = stories.filter((s) => !s.isPrivate);
+      const publicStories = stories
+        .filter((s) => !s.isPrivate)
+        .map((story) => ({
+          ...story,
+          comments: story.comments.map((comment) => ({
+            ...comment,
+            user: {
+              id: comment.user?.id || null,
+              name: comment.user?.name || 'Anonim',
+              anonymousId: comment.user?.anonymousId || null,
+            },
+          })),
+        }));
+
       return { status: 'success', data: publicStories };
     },
   });
@@ -144,7 +157,19 @@ const init = async () => {
         }
       }
 
-      return { status: 'success', data: story };
+      const storyWithAnon = {
+        ...story,
+        comments: story.comments.map((comment) => ({
+          ...comment,
+          user: {
+            id: comment.user?.id || null,
+            name: comment.user?.name || 'Anonim',
+            anonymousId: comment.user?.anonymousId || null,
+          },
+        })),
+      };
+
+      return { status: 'success', data: storyWithAnon };
     },
   });
 
